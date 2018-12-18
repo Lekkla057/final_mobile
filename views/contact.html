@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>PSU-takecare</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.css" />
+  <link rel="stylesheet" href="public/css/style.css">
+   <script src="https://www.gstatic.com/firebasejs/5.5.5/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/5.5.5/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/5.5.0/firebase.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/5.3.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/5.4.1/firebase-firestore.js"></script>
+<script src="https://www.gstatic.com/firebasejs/5.7.0/firebase.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyCbGE0Udjmrs2c7Y6l52XO49skTH8VIn88",
+    authDomain: "soaa-d26f8.firebaseapp.com",
+    databaseURL: "https://soaa-d26f8.firebaseio.com",
+    projectId: "soaa-d26f8",
+    storageBucket: "soaa-d26f8.appspot.com",
+    messagingSenderId: "875749411300"
+  };
+  firebase.initializeApp(config);
+  var db = firebase.firestore();
+    // Disable deprecated features
+    db.settings({
+      timestampsInSnapshots: true
+    });
+</script>
+</head>
+<body>
+    <header class="site-header">
+
+        <div class="row">
+            <div class="col-md-6  mb-2" >
+                <img src="public/1.png" class="rounded" alt="Cinque Terre" width="200" height="130"style="margin-left: 10%">
+            </div>
+           
+        </div>
+    </header>
+    <div class="row" >
+        <div class="col-md-12">
+            <ol class="breadcrumb"style="background-color: rgb(15, 32, 58);height:70px">
+              
+                <div class="col-md-3"style="margin-left: 80%;">
+                    
+                    <a  href="all" style="color:white;" >คำร้อง</a>
+                    |
+                    <a  href="in"  style="color:white;">เข้า</a> |
+                    <a  href="out"  style="color:white;">ออก</a>|
+                    <a  href="rule"  style="color:white;"> การทำผิด</a> |
+                    <a  onclick="logout()"  style="color:white;cursor: pointer;">LOGOUT</a> 
+             </div>
+            </ol>
+        </div>
+    </div>
+  <div class="container">
+    
+    <div class="wrapper animated bounceInLeft">
+     
+ 
+        <form method="POST" action="send" >
+         <div class="row"id="show"> </div>
+       
+         <br>
+        <center> <button  onclick='tong()' ><img src="https://image.flaticon.com/icons/svg/71/71746.svg" width="24" height="24" alt="Sent mail free icon" title="Sent mail free icon">Send</button></center> 
+          
+        </form>
+    
+    </div>
+  </div>
+
+  <script>
+      firebase.auth().onAuthStateChanged(function(user) {
+ if (user) {
+   // User is signed in.
+
+   // ...
+ } else {
+   // User is signed out.
+   window.location.href="index"
+   // ...
+ }
+});
+</script>
+</body>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+<script>
+
+
+
+ var removedoc =localStorage.getItem("tong")
+     var data =localStorage.getItem("data")
+  console.log(removedoc);
+  
+     var myObj = JSON.parse(data);
+     const  add=myObj;
+     console.log(myObj.img)
+     
+ var html=  '<input type="hidden"  name="name" value="'+myObj.name+'">'+'<input type="hidden"  name="email" value="'+myObj.email+'">'
+      +'<div class="card card-center" style=" width:100%;" >'+
+   
+      '<div class="card-body  text-center">'+'</h5 class="card-text">'+'ชื่อ : '+myObj.name+' '+myObj.lastname+'</h5>'+'<br>'+
+        '</h5 class="card-text">'+'สถานะ : '+myObj.typepeplo+'</h5>'+'<br>'+
+        '</h5 class="card-text">'+'คณะ : '+myObj.collect+'</h5>'+'<br>'+
+        '</h5 class="card-text">'+'สาขา : '+myObj.major+'</h5>'+'<br>'+
+        '</h5 class="card-text">'+'รหัสนักศึกษา : '+myObj.stuid+'</h5>'+'<br>'+
+        '</h5 class="card-text">'+'ประเภทรถ : '+myObj.typecar+'</h5>'+'<br>'+
+        '</h5 class="card-text">'+'ชั้นปี : '+myObj.year+'</h5>'+'<br>'+
+        '</h5 class="card-text">'+'Email : '+myObj.email+'</h5>'+'<br>'+
+        '</h5 class="card-text">'+'ทะเบียนรถ : '+myObj.carnumber+'</h5>'+'<br>'+
+        '</h5 class="card-text">'+'จังหวัด : '+myObj.provide+'</h5>'+'<br>'+
+        '</h5 class="card-text">'+'ยี่ห้อ : '+myObj.brand+'</h5>'+'<br>'+
+      ' <img src="'+myObj.img+'"  style="width:50%;higth:auto">'+'</div>'+'<br>'+
+      '</div>'+
+      '</div>'+
+    '</div>'+
+   
+  '</div>'+
+'</div>'
+  
+   document.getElementById('show').innerHTML=html;
+    // const fruits = data[1];
+  
+  function tong() {
+
+console.log('tttt',add);
+
+    db.collection("confirm").add(add)
+.then(function(docRef) {
+  remove()
+    console.log("Document written with ID: ", docRef.id);
+})
+.catch(function(error) {
+    console.error("Error adding document: ", error);
+});
+    
+  }
+  function remove() {
+    db.collection("user").doc(removedoc).delete().then(function() {
+    console.log("Document successfully deleted!");
+}).catch(function(error) {
+    console.error("Error removing document: ", error);
+});
+  }
+  function logout(){
+    
+    firebase.auth().signOut().then(function() {
+      ons.notification.alert('logoutเเล้วจ้ะ');
+      window.location.href="index"
+}).catch(function(error) {
+// An error happened.
+});
+ }
+</script>
+</html>

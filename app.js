@@ -7,8 +7,8 @@ const nodemailer = require('nodemailer');
 const app = express();
 
 // View engine setup
-app.engine('handlebars', exphbs());
-app.set('view engine', 'handlebars');
+app.engine('html', exphbs());
+app.set('view engine', 'html');
 
 // Static folder
 app.use('/public', express.static(path.join(__dirname, 'public')));
@@ -18,42 +18,66 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 app.get('/', (req, res) => {
+  res.render('index');
+});
+app.get('/index', (req, res) => {
+  res.render('index');
+});
+app.get('/all', (req, res) => {
+  res.render('all');
+});
+app.get('/contact', (req, res) => {
   res.render('contact');
+});
+app.get('/regist', (req, res) => {
+  res.render('regist');
+});
+app.get('/login', (req, res) => {
+  res.render('login');
+});
+app.get('/in', (req, res) => {
+  res.render('in');
+});
+app.get('/out', (req, res) => {
+  res.render('out');
+});
+app.get('/rule', (req, res) => {
+  res.render('rule');
 });
 
 app.post('/send', (req, res) => {
   const output = `
-    <p>You have a new contact request</p>
-    <h3>Contact Details</h3>
+  
+    <h3>เรียนคุณ</h3>
     <ul>  
-      <li>Name: ${req.body.name}</li>
-      <li>Company: ${req.body.company}</li>
-      <li>Email: ${req.body.email}</li>
-      <li>Phone: ${req.body.phone}</li>
+      <li> ${req.body.name}</li>
+    
+      <li> ${req.body.email}</li>
+      
     </ul>
     <h3>Message</h3>
-    <p>${req.body.message}</p>
+    <p>กรุณารับ สติ๊กเกอร์ QR Code ที่ห้อง 1202A เวลาตั้งเเต่ 9.00 - 9.01 นาฬิกา ได้ภายใน 30 วัน</p>
   `;
 
   // create reusable transporter object using the default SMTP transport
   let transporter = nodemailer.createTransport({
-    host: 'mail.YOURDOMAIN.com',
-    port: 587,
-    secure: false, // true for 465, false for other ports
+    host: 'smtp.gmail.com',
+    port: 465,
+    secure: true, // true for 465, false for other ports
     auth: {
-        user: 'YOUREMAIL', // generated ethereal user
-        pass: 'YOURPASSWORD'  // generated ethereal password
+        user: 'bell.b.love@gmail.com', // generated ethereal user
+        pass: 'supavadimanasuvan'  // generated ethereal password
     },
     tls:{
-      rejectUnauthorized:false
+      rejectUnauthorized:true
     }
   });
 
   // setup email data with unicode symbols
   let mailOptions = {
-      from: '"Nodemailer Contact" <your@email.com>', // sender address
-      to: 'RECEIVEREMAILS', // list of receivers
-      subject: 'Node Contact Request', // Subject line
+      from: '"PSU Security" <bell.b.love@gmail.com>', // sender address
+      to: req.body.email, // list of receivers
+      subject: 'Confirmed Register Document', // Subject line
       text: 'Hello world?', // plain text body
       html: output // html body
   };
@@ -66,7 +90,7 @@ app.post('/send', (req, res) => {
       console.log('Message sent: %s', info.messageId);   
       console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
 
-      res.render('contact', {msg:'Email has been sent'});
+      res.render('all', {msg:'Email has been sent'});
   });
   });
 

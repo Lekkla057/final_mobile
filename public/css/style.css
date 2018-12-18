@@ -3,7 +3,7 @@
 }
 
 body{
-  background:#92bde7;
+  background:#eaf1f3;
   color:#485e74;
   line-height:1.6;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -11,11 +11,19 @@ body{
 }
 
 .container{
-  max-width:1170px;
+  max-width:800px;
   margin-left:auto;
   margin-right:auto;
   padding:1em;
 }
+
+.container1{
+  max-width:1000px;
+  margin-left:auto;
+  margin-right:auto;
+  padding:1em;
+}
+
 
 ul{
   list-style: none;
@@ -90,17 +98,3 @@ ul{
 }
 
 /* LARGE SCREENS */
-@media(min-width:700px){
-  .wrapper{
-    display: grid;
-    grid-template-columns: 1fr 2fr;
-  }
-
-  .wrapper > *{
-    padding:2em;
-  }
-
-  .company-info h3, .company-info ul, .brand{
-    text-align: left;
-  }
-}
